@@ -244,7 +244,26 @@ static char firstLetterArray[HANZI_COUNT] =
     }
     return [result uppercaseString];
 }
-
+- (NSString*)firstWordChar
+{
+    if([NSString isBlank:self])
+        return @"#";
+    NSMutableString *source = [self mutableCopy];
+    CFStringTransform((CFMutableStringRef)source, NULL, kCFStringTransformMandarinLatin, NO);
+    CFStringTransform((CFMutableStringRef)source, NULL, kCFStringTransformStripDiacritics, NO);
+    NSString *str = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    NSString *ss = [[NSString stringWithFormat:@"%@",[source substringToIndex:1]] uppercaseString];
+    if([str rangeOfString:ss].location == NSNotFound)
+        return @"#";
+    return ss;
+}
++ (BOOL)isBlank:(NSString*)str
+{
+    BOOL ret = NO;
+    if ((str == nil)|| (str == NULL) || ([[str stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] == 0) || [str isKindOfClass:[NSNull class]])
+        ret = YES;
+    return ret;
+}
 @end
 
 @implementation NSArray (PinYin)

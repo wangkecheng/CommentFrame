@@ -42,35 +42,5 @@
 		<key>image</key>
 		<string>home_shouye</string>
 	</dict>
-	<dict>
-		<key>title</key>
-		<string>测试1</string>
-		<key>className</key>
-		<string>test1</string>
-		<key>selectImage</key>
-		<string>home_shouyeb</string>
-		<key>image</key>
-		<string>home_shouye</string>
-	</dict>
-	<dict>
-		<key>title</key>
-		<string>测试1</string>
-		<key>className</key>
-		<string>test1</string>
-		<key>selectImage</key>
-		<string>home_shouyeb</string>
-		<key>image</key>
-		<string>home_shouye</string>
-	</dict>
-	<dict>
-		<key>title</key>
-		<string>测试1</string>
-		<key>className</key>
-		<string>test1</string>
-		<key>selectImage</key>
-		<string>home_shouyeb</string>
-		<key>image</key>
-		<string>home_shouye</string>
-	</dict>
 </array>
 </plist>

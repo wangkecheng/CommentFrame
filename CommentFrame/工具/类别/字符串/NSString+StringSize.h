@@ -30,10 +30,7 @@
  */
 - (CGSize)textSizeWithFont:(UIFont *)font constrainedToSize:(CGSize)size lineSpace:(CGFloat)space;
 
+- (NSDictionary *)attributesWith:(UIFont *)font lineSpace:(CGFloat)space;
 
-+ (NSDictionary *)attributesWith:(UIFont *)font lineSpace:(CGFloat)space;
-
-
-+ (NSDictionary *)attributesWithFontSize:(CGFloat)fontSize lineSpace:(CGFloat)space;
-
+- (NSDictionary *)attributesWithFontSize:(CGFloat)fontSize lineSpace:(CGFloat)space;
 @end

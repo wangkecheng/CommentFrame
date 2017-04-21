@@ -18,6 +18,8 @@
  */
 - (NSString *)getFirstLetter;
 
+//获取单词的首字母
+- (NSString*)firstWordChar;
 @end
 
 @interface NSArray (PinYin)

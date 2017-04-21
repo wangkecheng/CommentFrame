@@ -9,6 +9,9 @@
 
 #import "DDFactory.h"
 #import <sys/utsname.h>
+#include<sys/types.h>
+
+#include<sys/sysctl.h>
 @implementation DDFactory
 
 +(instancetype)factory{
@@ -24,53 +27,6 @@
     return factory;
 }
 
-+ (NSString *)getString:(NSString *)string withDefault:(NSString *)defaultString{
-    
-    NSString * temStr;
-    if (![string isKindOfClass:[NSString class]]) {
-        temStr =  [DDFactory toString:string];
-    }else{
-        temStr = string;
-    }
-    if([DDFactory isEmptyWithString:temStr]
-       ){
-        //为空，返回默认数据
-        return defaultString;
-    }else{
-        //不为空，直接返回数据
-        return temStr;
-    }
-}
-+ (NSString *)toString:(id)anyObject{
-    return [NSString stringWithFormat:@"%@",anyObject];
-}
-
-
-
-/*
- *功能说明：
- *    判断字符串为空
- *参数说明：
- *string : 需要判断的字符串
- */
-+ (BOOL)isEmptyWithString:(NSString *)string{
-    NSString * temStr;
-    if (![string isKindOfClass:[NSString class]]) {
-        temStr =  [DDFactory toString:string];
-    }else{
-        temStr = string;
-    }
-    return ((temStr == nil)
-            ||([temStr isEqual:[NSNull null]])
-            ||([temStr isEqualToString:@"<null>"])
-            ||([temStr isEqualToString:@"(null)"])
-            ||([temStr isEqualToString:@" "])
-            ||([temStr isEqualToString:@""])
-            ||([temStr isEqualToString:@""])
-            ||([temStr isEqualToString:@"(\n)"])
-            ||([temStr isEqualToString:@"yanyu"])
-            );
-}
 
 -(instancetype)init{
     //不允许用init方法
@@ -99,6 +55,26 @@
     self.trendsHeigth = 0; //这里是键盘高度
 }
 
++ (NSString *)getString:(NSString *)string withDefault:(NSString *)defaultString{
+    
+    NSString * temStr;
+    if (![string isKindOfClass:[NSString class]]) {
+        temStr =  [DDFactory toString:string];
+    }else{
+        temStr = string;
+    }
+    if([DDFactory isEmptyWithString:temStr]
+       ){
+        //为空，返回默认数据
+        return defaultString;
+    }else{
+        //不为空，直接返回数据
+        return temStr;
+    }
+}
++ (NSString *)toString:(id)anyObject{
+    return [NSString stringWithFormat:@"%@",anyObject];
+}
 
 +(NSArray *)createClassByPlistName:(NSString *)plistName{
     
@@ -179,6 +155,20 @@
     UIViewController *VC = [storyboard instantiateViewControllerWithIdentifier:Id];
     return VC;
 }
++(id)getXibObjc:(NSString *)xibName{
+    
+    return [[NSBundle mainBundle]loadNibNamed:xibName owner:nil options:nil][0];
+}
+#pragma mark - 移除收音机
+- (void) removeObserver:(id)observer{
+    [[NSNotificationCenter defaultCenter] removeObserver:observer];
+}
+
+#pragma mark - 移除接收频道
+- (void)removeChannel:(NSString *)channel{
+    if (_observerData!= nil)
+        [_observerData removeObjectForKey:channel];
+}
 
 // 颜色转换为背景图片 注意 四个取值， 会影响最终颜色
 +(UIImage *)imageWithColor:(UIColor *)color {
@@ -213,21 +203,8 @@
     return [NSURL URLWithString:imgStr] ;
 }
 
-+(id)getXibObjc:(NSString *)xibName{
-    
-   return [[NSBundle mainBundle]loadNibNamed:xibName owner:nil options:nil][0];
-}
 
-#pragma mark - 移除收音机
-- (void) removeObserver:(id)observer{
-    [[NSNotificationCenter defaultCenter] removeObserver:observer];
-}
 
-#pragma mark - 移除接收频道
-- (void)removeChannel:(NSString *)channel{
-    if (_observerData!= nil)
-        [_observerData removeObjectForKey:channel];
-}
 //高度不变获取宽度
 +(CGFloat)autoWidthWithLabel:(UILabel *)label{
     if (label == nil ) {
@@ -262,81 +239,6 @@
     return rect.size.height;
 }
 
-//标准化时间
-+(NSString *)makeTimeFormat:(NSString *)dateStr{
-    NSDate * date = [self strTimeToTime:dateStr];
-    NSMutableString  *strTemp = [[NSMutableString alloc]init];
-    NSDateComponents *components =  [NSDate componentsByDate:date];
-    NSDateComponents *ThisTimeCP =  [NSDate  componentsByDate:[NSDate date]];
-    
-    
-    if (components.year == ThisTimeCP.year && components.month==ThisTimeCP.month &&
-        components.day==ThisTimeCP.day && components.hour==ThisTimeCP.hour &&
-        components.minute==ThisTimeCP.minute) {
-        [strTemp appendString:@"刚刚"];
-    }
-    
-    else if (components.year == ThisTimeCP.year && components.month == ThisTimeCP.month && components.day == ThisTimeCP.day) {
-        // 当天的
-        [strTemp appendFormat:@"%ld:%@",components.hour,[self addZero:components.minute]];
-    }
-
-    else if (components.year == ThisTimeCP.year && components.month == ThisTimeCP.month){
-        //当月的
-        [strTemp appendFormat:@"%@月%@日 %ld:%@", [self addZero:components.month], [self addZero:components.day],components.hour,[self addZero:components.minute]];
-    }
-    else if (components.year == ThisTimeCP.year && components.month != ThisTimeCP.month){
-        //本年 前几个月的
-        [strTemp appendFormat:@"%ld-%@-%@ %ld:%@",components.year,[self addZero:components.month],[self addZero:components.day],components.hour,[self addZero:components.minute]];
-    }
-    else if(components.year != ThisTimeCP.year){
-        //以前年度
-        [strTemp appendFormat:@"%ld-%@-%@",components.year,[self addZero:components.month],[self addZero:components.day]];
-    }
-  
-    return  [strTemp copy];
-}
-//计算多久之前
-+(NSString *)makeTimeBefore:(NSString *)dateStr{
-    NSDate * date = [self strTimeToTime:dateStr];
-    NSMutableString  *strTemp = [[NSMutableString alloc]init];
-    NSDateComponents *components =  [NSDate componentsByDate:date];
-    NSDateComponents *ThisTimeCP =  [NSDate  componentsByDate:[NSDate date]];
-    
-    
-    if (components.year == ThisTimeCP.year && components.month==ThisTimeCP.month &&
-        components.day==ThisTimeCP.day && components.hour==ThisTimeCP.hour &&
-        components.minute==ThisTimeCP.minute) {
-        [strTemp appendString:@"刚刚"];
-    }
-    
-    else if (components.year == ThisTimeCP.year && components.month == ThisTimeCP.month && components.day == ThisTimeCP.day) {
-        // 当天的
-        [strTemp appendFormat:@"%ld:%ld",labs(components.hour - ThisTimeCP.hour),labs(components.minute - ThisTimeCP.minute)];//abs
-    }
-    
-    else if (components.year == ThisTimeCP.year && components.month == ThisTimeCP.month){
-        //当月的
-        [strTemp appendFormat:@"%ld",labs(components.day - ThisTimeCP.day)];
-    }
-    else if (components.year == ThisTimeCP.year && components.month != ThisTimeCP.month){
-        //本年 前几个月的
-        [strTemp appendFormat:@"%ld:%ld:",labs(components.month- ThisTimeCP.month),labs(components.day - ThisTimeCP.day)];
-    }
-    else if(components.year != ThisTimeCP.year){
-        //以前年度
-        [strTemp appendFormat:@"%ld年前",labs(components.year - ThisTimeCP.year)];
-    }
-    return  [strTemp copy];
-}
-
-
-+(NSString *)addZero:(NSInteger)time{
-    if (time<10) {
-        return [NSString stringWithFormat:@"0%ld",time];
-    }
-    return [NSString stringWithFormat:@"%ld",time];
-}
 //时间字符串转换为时间
 +(NSDate *)strTimeToTime:(NSString *)strTime{
     
@@ -353,7 +255,6 @@
 
 +(void)circleImageView:(UIImageView *)imageView{
     
-    //
     CGSize size = CGSizeMake(imageView.frame.size.width, imageView.frame.size.height);
     
     //创建视图上下文
@@ -403,194 +304,7 @@
     img =  UIGraphicsGetImageFromCurrentImageContext();
     return img;
 }
-+ (UIColor *)colorWithHexString:(NSString *)stringToConvert{
-    NSString *cString = [[stringToConvert stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] uppercaseString];
-    
-    if ([cString length] < 6)
-        return [UIColor whiteColor];
-    if ([cString hasPrefix:@"#"])
-        cString = [cString substringFromIndex:1];
-    if ([cString length] != 6)
-        return [UIColor whiteColor];
-    
-    NSRange range;
-    range.location = 0;
-    range.length = 2;
-    NSString *rString = [cString substringWithRange:range];
-    
-    range.location = 2;
-    NSString *gString = [cString substringWithRange:range];
-    
-    range.location = 4;
-    NSString *bString = [cString substringWithRange:range];
-    
-    
-    unsigned int r, g, b;
-    [[NSScanner scannerWithString:rString] scanHexInt:&r];
-    [[NSScanner scannerWithString:gString] scanHexInt:&g];
-    [[NSScanner scannerWithString:bString] scanHexInt:&b];
-    
-    return [UIColor colorWithRed:((float) r / 255.0f)
-                           green:((float) g / 255.0f)
-                            blue:((float) b / 255.0f)
-                           alpha:1.0f];
-}
-+(void)setBtn:(UIButton *)btn{
-    
-    [self setBtn:btn Radius:10 NColor:@"#5db9d8" HColor:@"#3e7f96"];
-}
-+(void)setBtnBackColor:(UIButton *)btn{
-    [self setBtn:btn Radius:0 NColor:@"#5db9d8" HColor:@"#3e7f96"];
-}
-+(void)setBtnGray:(UIButton *)btn{
-    btn.layer.cornerRadius = 10;
-    btn.layer.masksToBounds = YES;
-    btn.backgroundColor = [UIColor colorWithRed:174/255.0 green:174/255.0 blue:174/255.0 alpha:1];
-    [btn setTitleColor:[UIColor whiteColor] forState:0];
-    btn.userInteractionEnabled = NO;
-}
 
-+(void)setBtnRadius:(UIButton *)btn{
-    btn.layer.cornerRadius = 5;
-    btn.layer.masksToBounds = YES;
-}
-+(void)setBtn:(UIButton *)btn Radius:(NSInteger)radius NColor:(NSString *)NColor HColor:(NSString *)HColor{
-    btn.layer.cornerRadius = radius;
-    btn.layer.masksToBounds = YES;
-    [btn setBackgroundImage:[self imageWithColor:[self colorWithHexString:NColor]] forState:UIControlStateNormal];
-    [btn setBackgroundImage:[self imageWithColor:[self colorWithHexString:HColor]] forState:UIControlStateHighlighted];
-}
-//判断是否是纯字母
-+ (BOOL)isPureCharacters:(NSString *)string{
-    string = [string stringByTrimmingCharactersInSet:[NSCharacterSet letterCharacterSet]];
-    if(string.length > 0) {
-        return NO;
-    }
-    return YES;
-}
-
-//判断是否是纯数字
-+ (BOOL)isPureNum:(NSString *)string{
-    string = [string stringByTrimmingCharactersInSet:[NSCharacterSet decimalDigitCharacterSet]];
-    if(string.length > 0) {
-        return NO;
-    }
-    return YES;
-}
-#pragma mark 判断身份证号是否合法
-+(BOOL)judgeIdentityStringValid:(NSString *)identityString {
-    if (identityString.length != 18) return NO;
-    // 正则表达式判断基本 身份证号是否满足格式
-    NSString *regex2 = @"^(^[1-9]\\d{7}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}$)|(^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])((\\d{4})|\\d{3}[Xx])$)$";
-    NSPredicate *identityStringPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex2];
-    //如果通过该验证，说明身份证格式正确，但准确性还需计算
-    if(![identityStringPredicate evaluateWithObject:identityString]) return NO;
-    //** 开始进行校验 *//
-    //将前17位加权因子保存在数组里
-    NSArray *idCardWiArray = @[@"7", @"9", @"10", @"5", @"8", @"4", @"2", @"1", @"6", @"3", @"7", @"9", @"10", @"5", @"8", @"4", @"2"];
-    //这是除以11后，可能产生的11位余数、验证码，也保存成数组
-    NSArray *idCardYArray = @[@"1", @"0", @"10", @"9", @"8", @"7", @"6", @"5", @"4", @"3", @"2"];
-    //用来保存前17位各自乖以加权因子后的总和
-    NSInteger idCardWiSum = 0;
-    for(int i = 0;i < 17;i++) {
-        NSInteger subStrIndex  = [[identityString substringWithRange:NSMakeRange(i, 1)] integerValue];
-        NSInteger idCardWiIndex = [[idCardWiArray objectAtIndex:i] integerValue];
-        idCardWiSum      += subStrIndex * idCardWiIndex;
-    }
-    //计算出校验码所在数组的位置
-    NSInteger idCardMod=idCardWiSum%11;
-    //得到最后一位身份证号码
-    NSString *idCardLast= [identityString substringWithRange:NSMakeRange(17, 1)];
-    //如果等于2，则说明校验码是10，身份证号码最后一位应该是X
-    if(idCardMod==2) {
-        if(![idCardLast isEqualToString:@"X"]||[idCardLast isEqualToString:@"x"]) {
-            return NO;
-        }
-    }else{
-        //用计算出的验证码与最后一位身份证号码匹配，如果一致，说明通过，否则是无效的身份证号码
-        if(![idCardLast isEqualToString: [idCardYArray objectAtIndex:idCardMod]]) {
-            return NO;
-        }
-    }
-    return YES;
-}
-#pragma mark 判断银行卡号是否合法
-+(BOOL)isBankCard:(NSString *)cardNumber{
-    if(cardNumber.length==0){
-        return NO;
-    }
-    NSString *digitsOnly = @"";
-    char c;
-    for (int i = 0; i < cardNumber.length; i++){
-        c = [cardNumber characterAtIndex:i];
-        if (isdigit(c)){
-            digitsOnly =[digitsOnly stringByAppendingFormat:@"%c",c];
-        }
-    }
-    int sum = 0;
-    int digit = 0;
-    int addend = 0;
-    BOOL timesTwo = false;
-    for (NSInteger i = digitsOnly.length - 1; i >= 0; i--){
-        digit = [digitsOnly characterAtIndex:i] - '0';
-        if (timesTwo){
-            addend = digit * 2;
-            if (addend > 9) {
-                addend -= 9;
-            }
-        }
-        else {
-            addend = digit;
-        }
-        sum += addend;
-        timesTwo = !timesTwo;
-    }
-    int modulus = sum % 10;
-    return modulus == 0;
-}
-//判断是否为整形：
-- (BOOL)isPureInt:(NSString*)string{
-    NSScanner* scanner = [NSScanner scannerWithString:string];
-    int val;
-    return[scanner scanInt:&val] && [scanner isAtEnd];
-}
-+ (BOOL)isNumOrCharater:(NSString *)string{
-    
-    return [DDFactory isPureNum:string] || [DDFactory isPureCharacters:string];
-}
-//判断是否包含连续的数组或字母，yes为包含
-+ (BOOL)rangeString:(NSString *)string {
-    BOOL result = NO;
-    for (int i = 0; i < string.length; i++) {
-        if (string.length - i < 4 ) {
-            break;
-        }
-        NSString *newStr = [string substringWithRange:NSMakeRange(i, 4)];
-        if ([self isPureCharacters:newStr] || [self isPureNum:newStr]) {
-            NSLog(@"%@",newStr);
-            result = YES; break;
-        }
-    }
-    return result;
-}
-//
-+ (BOOL) isPrice:(NSString *) price {
-   NSString *format =@"(^[1-9]([0-9]+)?(.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9].[0-9]([0-9])?$)";
-   NSPredicate *regextest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", format];
-     if ([regextest evaluateWithObject:price] == YES)
-         return YES;
-    else
-         return NO;
-}
-
-//触摸点是否再某个控件的显示区域内
-+(BOOL)isView:(UIView *)view containPoint:(CGPoint)point{
-    if (CGRectGetMinX(view.frame) <= point.x && point.x <= CGRectGetMaxX(view.frame)  && CGRectGetMinY(view.frame) <= point.y
-        && point.y <= CGRectGetMaxY(view.frame)) {
-        return YES;
-    }
-    return NO;
-}
 
 
 //检查密码强度
@@ -608,8 +322,7 @@
         //密码长度太长 请牢记密码
     }
 }
-    
-    
+
 //将对象的属性和值对应起来， 作为字典的格式
 +(NSDictionary*)reverseObjcToDict:(id)obj{
     
@@ -647,6 +360,7 @@
     }
     return nil;
 }
+
 +(id)getObjectInternal:(id)obj{
     
     if([obj isKindOfClass:[NSString class]]
@@ -685,6 +399,7 @@
     
     return [DDFactory reverseObjcToDict:obj];
 }
+
 +(UIViewController *)appRootViewController{
     
     UIViewController *appRootVC = [UIApplication sharedApplication].keyWindow.rootViewController;
@@ -697,6 +412,7 @@
     }
     return topVC;
 }
+
 +(CGSize)getImageSizeWithURL:(id)imageURL
 {
     NSURL* URL = nil;
@@ -734,6 +450,7 @@
     }
     return size;
 }
+
 +(CGSize)getGIFImageSizeWithRequest:(NSMutableURLRequest*)request
 {
     [request setValue:@"bytes=6-9" forHTTPHeaderField:@"Range"];
@@ -752,6 +469,7 @@
     }
     return CGSizeZero;
 }
+
 +(CGSize)getJPGImageSizeWithRequest:(NSMutableURLRequest*)request
 {
     [request setValue:@"bytes=0-209" forHTTPHeaderField:@"Range"];
@@ -824,6 +542,7 @@
     }
     return CGSizeZero;
 }
+
 +(NSString *)timeFormatted:(NSInteger)totalSeconds{
     
     NSInteger seconds = totalSeconds % 60;
@@ -834,6 +553,138 @@
     
     NSString *time = [NSString stringWithFormat:@"%02ld:%02ld:%02ld",hours, minutes, seconds];
     return time;
+}
+
++(void)checkNetWorkingState{
+    [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
+    NSURL *url = [NSURL URLWithString:@"http://www.baidu.com"];
+    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:url];
+    NSOperationQueue *operationQueue       = manager.operationQueue;
+    [manager.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        switch (status) {
+            case AFNetworkReachabilityStatusReachableViaWWAN:
+            case AFNetworkReachabilityStatusReachableViaWiFi:
+                [operationQueue setSuspended:NO];
+                NSLog(@"有网络");
+                break;
+            case AFNetworkReachabilityStatusNotReachable:
+            default:
+                [operationQueue setSuspended:YES];
+                NSLog(@"无网络");
+                break;
+        }
+    }];
+    // 开始监听
+    [manager.reachabilityManager startMonitoring];
+}
+
++ (NSString*)getCurrentDeviceModel{
+    
+    int mib[2];
+    
+    size_t len;
+    
+    char*machine;
+    
+    mib[0] =CTL_HW;
+    
+    mib[1] =HW_MACHINE;
+    
+    sysctl(mib,2,NULL, &len,NULL,0);
+    
+    machine =malloc(len);
+    
+    sysctl(mib,2, machine, &len,NULL,0);
+    
+    NSString*platform = [NSString stringWithCString:machine encoding:NSASCIIStringEncoding];
+    
+    free(machine);
+    
+    if([platform isEqualToString:@"iPhone1,1"])return@"iPhone 2G (A1203)";
+    
+    if([platform isEqualToString:@"iPhone1,2"])return@"iPhone 3G (A1241/A1324)";
+    
+    if([platform isEqualToString:@"iPhone2,1"])return@"iPhone 3GS (A1303/A1325)";
+    
+    if([platform isEqualToString:@"iPhone3,1"])return@"iPhone 4 (A1332)";
+    
+    if([platform isEqualToString:@"iPhone3,2"])return@"iPhone 4 (A1332)";
+    
+    if([platform isEqualToString:@"iPhone3,3"])return@"iPhone 4 (A1349)";
+    
+    if([platform isEqualToString:@"iPhone4,1"])return@"iPhone 4S (A1387/A1431)";
+    
+    if([platform isEqualToString:@"iPhone5,1"])return@"iPhone 5 (A1428)";
+    
+    if([platform isEqualToString:@"iPhone5,2"])return@"iPhone 5 (A1429/A1442)";
+    
+    if([platform isEqualToString:@"iPhone5,3"])return@"iPhone 5c (A1456/A1532)";
+    
+    if([platform isEqualToString:@"iPhone5,4"])return@"iPhone 5c (A1507/A1516/A1526/A1529)";
+    
+    if([platform isEqualToString:@"iPhone6,1"])return@"iPhone 5s (A1453/A1533)";
+    
+    if([platform isEqualToString:@"iPhone6,2"])return@"iPhone 5s (A1457/A1518/A1528/A1530)";
+    
+    if([platform isEqualToString:@"iPhone7,1"])return@"iPhone 6 Plus (A1522/A1524)";
+    
+    if([platform isEqualToString:@"iPhone7,2"])return@"iPhone 6 (A1549/A1586)";
+    
+    if([platform isEqualToString:@"iPod1,1"])return@"iPod Touch 1G (A1213)";
+    
+    if([platform isEqualToString:@"iPod2,1"])return@"iPod Touch 2G (A1288)";
+    
+    if([platform isEqualToString:@"iPod3,1"])return@"iPod Touch 3G (A1318)";
+    
+    if([platform isEqualToString:@"iPod4,1"])return@"iPod Touch 4G (A1367)";
+    
+    if([platform isEqualToString:@"iPod5,1"])return@"iPod Touch 5G (A1421/A1509)";
+    
+    if([platform isEqualToString:@"iPad1,1"])return@"iPad 1G (A1219/A1337)";
+    
+    if([platform isEqualToString:@"iPad2,1"])return@"iPad 2 (A1395)";
+    
+    if([platform isEqualToString:@"iPad2,2"])return@"iPad 2 (A1396)";
+    
+    if([platform isEqualToString:@"iPad2,3"])return@"iPad 2 (A1397)";
+    
+    if([platform isEqualToString:@"iPad2,4"])return@"iPad 2 (A1395+New Chip)";
+    
+    if([platform isEqualToString:@"iPad2,5"])return@"iPad Mini 1G (A1432)";
+    
+    if([platform isEqualToString:@"iPad2,6"])return@"iPad Mini 1G (A1454)";
+    
+    if([platform isEqualToString:@"iPad2,7"])return@"iPad Mini 1G (A1455)";
+    
+    if([platform isEqualToString:@"iPad3,1"])return@"iPad 3 (A1416)";
+    
+    if([platform isEqualToString:@"iPad3,2"])return@"iPad 3 (A1403)";
+    
+    if([platform isEqualToString:@"iPad3,3"])return@"iPad 3 (A1430)";
+    
+    if([platform isEqualToString:@"iPad3,4"])return@"iPad 4 (A1458)";
+    
+    if([platform isEqualToString:@"iPad3,5"])return@"iPad 4 (A1459)";
+    
+    if([platform isEqualToString:@"iPad3,6"])return@"iPad 4 (A1460)";
+    
+    if([platform isEqualToString:@"iPad4,1"])return@"iPad Air (A1474)";
+    
+    if([platform isEqualToString:@"iPad4,2"])return@"iPad Air (A1475)";
+    
+    if([platform isEqualToString:@"iPad4,3"])return@"iPad Air (A1476)";
+    
+    if([platform isEqualToString:@"iPad4,4"])return@"iPad Mini 2G (A1489)";
+    
+    if([platform isEqualToString:@"iPad4,5"])return@"iPad Mini 2G (A1490)";
+    
+    if([platform isEqualToString:@"iPad4,6"])return@"iPad Mini 2G (A1491)";
+    
+    if([platform isEqualToString:@"i386"])return@"iPhone Simulator";
+    
+    if([platform isEqualToString:@"x86_64"])return@"iPhone Simulator";
+    
+    return platform;
     
 }
 

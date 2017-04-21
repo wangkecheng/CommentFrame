@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSDate (DateInterval) 
+@interface NSDate (Category) 
 
 /**两个Date之间的比较*/
 - (NSDateComponents *)intervalToDate:(NSDate *)date;

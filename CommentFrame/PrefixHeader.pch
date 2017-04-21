@@ -41,18 +41,16 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 #define AttachInfo @"attachInfo"//控制器 的附加信息
 
 #import "objc/runtime.h"
-#import "NSDate+DateInterval.h"//时间差
-#import "NSString+firstChar.h"//获取首字符
-#import "NSString+isBlank.h"//检查字符是否是空
 #import "UIView+SDAutoLayout.h"//自动布局
-#import "NSString+Num2String.h"//将整数 浮点数 快速转为字符串
 #import "UITableView+LOExtension.h"
-#import "UIImage+UIImageExtras.h"
 #import "NSString+StringSize.h"
+#import "NSDate+Category.h"
+#import "NSString+Category.h"
 
 #import "YYModel.h"
 #import "AFNetworking.h"
 #import "SDImageCache.h"
+#import <AFNetworkActivityIndicatorManager.h>
 #import "UIButton+WebCache.h"
 #import "MJRefresh.h"
 #import "MBProgressHUD.h"

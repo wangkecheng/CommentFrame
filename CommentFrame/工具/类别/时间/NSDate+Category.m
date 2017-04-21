@@ -6,9 +6,9 @@
 //  Copyright © 2016年 warron. All rights reserved.
 //
 
-#import "NSDate+DateInterval.h"
+#import "NSDate+Category.h"
 
-@implementation NSDate(DateInterval)
+@implementation NSDate(Category)
 // 得到的结果如下图（可用作判断会话时间显示：例如：几分钟之前，今天，昨天 等
 
 - (NSDateComponents *)intervalToDate:(NSDate *)date{
