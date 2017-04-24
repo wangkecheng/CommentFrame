@@ -10,5 +10,4 @@
 
 @interface HDBaseVC : UIViewController
 
--(void)setLeftBtn;
 @end

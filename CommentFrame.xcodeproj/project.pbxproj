@@ -62,11 +62,11 @@
 		2079EB301EA9CC67004DE68B /* home_shouye.png in Resources */ = {isa = PBXBuildFile; fileRef = 2079EB2D1EA9CC67004DE68B /* home_shouye.png */; };
 		2079EB311EA9CC67004DE68B /* home_shouye@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2079EB2E1EA9CC67004DE68B /* home_shouye@2x.png */; };
 		2079EB321EA9CC67004DE68B /* home_shouye@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2079EB2F1EA9CC67004DE68B /* home_shouye@3x.png */; };
-		2079EB3B1EA9CF67004DE68B /* test1.m in Sources */ = {isa = PBXBuildFile; fileRef = 2079EB391EA9CF67004DE68B /* test1.m */; };
-		2079EB3C1EA9CF67004DE68B /* test1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2079EB3A1EA9CF67004DE68B /* test1.xib */; };
-		2079EB3F1EA9D25C004DE68B /* test2.m in Sources */ = {isa = PBXBuildFile; fileRef = 2079EB3E1EA9D25C004DE68B /* test2.m */; };
 		2079EB521EA9FC09004DE68B /* NSDate+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 2079EB511EA9FC09004DE68B /* NSDate+Category.m */; };
 		2079EB551EAA03F8004DE68B /* NSString+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 2079EB541EAA03F8004DE68B /* NSString+Category.m */; };
+		20CBFD311EADEC69002F4280 /* test1.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CBFD2B1EADEC69002F4280 /* test1.m */; };
+		20CBFD321EADEC69002F4280 /* test1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20CBFD2C1EADEC69002F4280 /* test1.xib */; };
+		20CBFD331EADEC69002F4280 /* test2.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CBFD301EADEC69002F4280 /* test2.m */; };
 		20DDE1601EA9A9D000E4CC04 /* UITableView+LOExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 20DDE13C1EA9A9D000E4CC04 /* UITableView+LOExtension.m */; };
 		20DDE1681EA9A9D000E4CC04 /* NSString+PinYin.m in Sources */ = {isa = PBXBuildFile; fileRef = 20DDE1511EA9A9D000E4CC04 /* NSString+PinYin.m */; };
 		20DDE1691EA9A9D000E4CC04 /* NSString+StringSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 20DDE1531EA9A9D000E4CC04 /* NSString+StringSize.m */; };
@@ -219,15 +219,15 @@
 		2079EB2D1EA9CC67004DE68B /* home_shouye.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home_shouye.png; sourceTree = "<group>"; };
 		2079EB2E1EA9CC67004DE68B /* home_shouye@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home_shouye@2x.png"; sourceTree = "<group>"; };
 		2079EB2F1EA9CC67004DE68B /* home_shouye@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home_shouye@3x.png"; sourceTree = "<group>"; };
-		2079EB381EA9CF67004DE68B /* test1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = test1.h; sourceTree = "<group>"; };
-		2079EB391EA9CF67004DE68B /* test1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = test1.m; sourceTree = "<group>"; };
-		2079EB3A1EA9CF67004DE68B /* test1.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = test1.xib; sourceTree = "<group>"; };
-		2079EB3D1EA9D25C004DE68B /* test2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = test2.h; sourceTree = "<group>"; };
-		2079EB3E1EA9D25C004DE68B /* test2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = test2.m; sourceTree = "<group>"; };
 		2079EB501EA9FC09004DE68B /* NSDate+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Category.h"; sourceTree = "<group>"; };
 		2079EB511EA9FC09004DE68B /* NSDate+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Category.m"; sourceTree = "<group>"; };
 		2079EB531EAA03F8004DE68B /* NSString+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Category.h"; sourceTree = "<group>"; };
 		2079EB541EAA03F8004DE68B /* NSString+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Category.m"; sourceTree = "<group>"; };
+		20CBFD2A1EADEC69002F4280 /* test1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = test1.h; sourceTree = "<group>"; };
+		20CBFD2B1EADEC69002F4280 /* test1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = test1.m; sourceTree = "<group>"; };
+		20CBFD2C1EADEC69002F4280 /* test1.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = test1.xib; sourceTree = "<group>"; };
+		20CBFD2F1EADEC69002F4280 /* test2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = test2.h; sourceTree = "<group>"; };
+		20CBFD301EADEC69002F4280 /* test2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = test2.m; sourceTree = "<group>"; };
 		20DDE13B1EA9A9D000E4CC04 /* UITableView+LOExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+LOExtension.h"; sourceTree = "<group>"; };
 		20DDE13C1EA9A9D000E4CC04 /* UITableView+LOExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+LOExtension.m"; sourceTree = "<group>"; };
 		20DDE1501EA9A9D000E4CC04 /* NSString+PinYin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+PinYin.h"; sourceTree = "<group>"; };
@@ -463,11 +463,7 @@
 			isa = PBXGroup;
 			children = (
 				2079EB141EA9C8E6004DE68B /* BaseVC */,
-				2079EB381EA9CF67004DE68B /* test1.h */,
-				2079EB391EA9CF67004DE68B /* test1.m */,
-				2079EB3A1EA9CF67004DE68B /* test1.xib */,
-				2079EB3D1EA9D25C004DE68B /* test2.h */,
-				2079EB3E1EA9D25C004DE68B /* test2.m */,
+				20CBFD281EADEC69002F4280 /* 首页 */,
 			);
 			path = "视图";
 			sourceTree = "<group>";
@@ -679,6 +675,42 @@
 				2079EB511EA9FC09004DE68B /* NSDate+Category.m */,
 			);
 			path = "时间";
+			sourceTree = "<group>";
+		};
+		20CBFD281EADEC69002F4280 /* 首页 */ = {
+			isa = PBXGroup;
+			children = (
+				20CBFD2A1EADEC69002F4280 /* test1.h */,
+				20CBFD2B1EADEC69002F4280 /* test1.m */,
+				20CBFD2C1EADEC69002F4280 /* test1.xib */,
+				20CBFD291EADEC69002F4280 /* model */,
+				20CBFD2D1EADEC69002F4280 /* view */,
+				20CBFD2E1EADEC69002F4280 /* 子控制器 */,
+			);
+			path = "首页";
+			sourceTree = "<group>";
+		};
+		20CBFD291EADEC69002F4280 /* model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		20CBFD2D1EADEC69002F4280 /* view */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		20CBFD2E1EADEC69002F4280 /* 子控制器 */ = {
+			isa = PBXGroup;
+			children = (
+				20CBFD2F1EADEC69002F4280 /* test2.h */,
+				20CBFD301EADEC69002F4280 /* test2.m */,
+			);
+			path = "子控制器";
 			sourceTree = "<group>";
 		};
 		20DDE1391EA9A9D000E4CC04 /* 类别 */ = {
@@ -994,7 +1026,6 @@
 			files = (
 				2079EB2A1EA9CC44004DE68B /* home_shouyeb.png in Resources */,
 				2031F6C41EA99BA30075E7F3 /* LaunchScreen.storyboard in Resources */,
-				2079EB3C1EA9CF67004DE68B /* test1.xib in Resources */,
 				2031F6C11EA99BA30075E7F3 /* Assets.xcassets in Resources */,
 				2031F6BF1EA99BA30075E7F3 /* Main.storyboard in Resources */,
 				2079EAF21EA9B875004DE68B /* ShareSDKConfigFile.bundle in Resources */,
@@ -1012,6 +1043,7 @@
 				2079EB321EA9CC67004DE68B /* home_shouye@3x.png in Resources */,
 				2079EB301EA9CC67004DE68B /* home_shouye.png in Resources */,
 				2079EB311EA9CC67004DE68B /* home_shouye@2x.png in Resources */,
+				20CBFD321EADEC69002F4280 /* test1.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1162,12 +1194,12 @@
 				20DDE1D61EA9AC3600E4CC04 /* ELCAlbumPickerController.m in Sources */,
 				20DDE1601EA9A9D000E4CC04 /* UITableView+LOExtension.m in Sources */,
 				2031F6B91EA99BA30075E7F3 /* AppDelegate.m in Sources */,
+				20CBFD331EADEC69002F4280 /* test2.m in Sources */,
 				2079EB171EA9C909004DE68B /* HDMainNavC.m in Sources */,
 				20DDE2321EA9ADDE00E4CC04 /* ZYShareSheetView.m in Sources */,
 				2031F70B1EA9A3F70075E7F3 /* SDLoadingView.m in Sources */,
 				20DDE22F1EA9ADDE00E4CC04 /* ZYShareItem.m in Sources */,
 				20DDE2C91EA9B03E00E4CC04 /* LBTabButtonPagerController.m in Sources */,
-				2079EB3F1EA9D25C004DE68B /* test2.m in Sources */,
 				2031F6F61EA9A3BE0075E7F3 /* HDMsgBtn.m in Sources */,
 				20DDE2311EA9ADDE00E4CC04 /* ZYShareSheetCell.m in Sources */,
 				20DDE18A1EA9ABE200E4CC04 /* TADotView.m in Sources */,
@@ -1179,11 +1211,11 @@
 				2031F7191EA9A4860075E7F3 /* CacheTool.m in Sources */,
 				20DDE18C1EA9ABE200E4CC04 /* SDCollectionViewCell.m in Sources */,
 				20DDE2CA1EA9B03E00E4CC04 /* LBTabPagerController.m in Sources */,
+				20CBFD311EADEC69002F4280 /* test1.m in Sources */,
 				2079EB1A1EA9C94C004DE68B /* HDBaseVC.m in Sources */,
 				20DDE1DA1EA9AC3600E4CC04 /* ELCConsole.m in Sources */,
 				20DDE2B51EA9AF9B00E4CC04 /* UIView+SDAutoLayout.m in Sources */,
 				20DDE1D81EA9AC3600E4CC04 /* ELCAssetCell.m in Sources */,
-				2079EB3B1EA9CF67004DE68B /* test1.m in Sources */,
 				2031F7131EA9A43B0075E7F3 /* BaseServer.m in Sources */,
 				20DDE1DB1EA9AC3600E4CC04 /* ELCImagePickerController.m in Sources */,
 				20DDE1691EA9A9D000E4CC04 /* NSString+StringSize.m in Sources */,
