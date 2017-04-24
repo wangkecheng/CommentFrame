@@ -45,6 +45,21 @@
         [self addChildViewController:navc];
     }
 }
+//是否可以旋转 这个在 HDMainNavC 中也需要设置
+- (BOOL)shouldAutorotate{
+    if (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) {
+        return YES;//是平板就支持
+    }
+    return NO;
+}
+//支持的方向
+-(UIInterfaceOrientationMask)supportedInterfaceOrientations
+{
+    if (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) {
+        return UIInterfaceOrientationMaskAll;//是平板就支持 所有，iphone支持竖屏
+    }
+    return UIInterfaceOrientationMaskPortrait;
+}
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
 }
