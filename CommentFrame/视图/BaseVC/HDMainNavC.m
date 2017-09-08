@@ -31,22 +31,27 @@
 /**
  *  通过拦截push方法来设置每个push进来的控制器的返回按钮
  */
--(void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated{
+-(void)pushViewController:(HDBaseVC *)VC animated:(BOOL)animated{
     
     if (self.childViewControllers.count > 0) { // 如果push进来的不是第一个控制器
-        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(20, 0, 15, 15)];
-        [btn setImage:IMG(@"ic_fanhui.png") forState:UIControlStateNormal];
-        [btn setImage:IMG(@"c4_ic_zuo.png") forState:UIControlStateHighlighted]; // 让按钮内部的所有内容左对齐
-        btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(40, 0, 13, 24)];
+        [btn setImage:IMG(@"g_fanhui_1.png") forState:UIControlStateNormal];
+        //        [btn setImage:IMG(@"c4_ic_zuo.png") forState:UIControlStateHighlighted];
+        // 让按钮内部的所有内容左对齐
+        btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
         //设置内边距，让按钮靠近屏幕边缘
-        btn.contentEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0);
-        [btn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
-       UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:btn];
-        [viewController.navigationItem setLeftBarButtonItem:item];
-        viewController.hidesBottomBarWhenPushed = YES; // 隐藏底部的工具条
+        btn.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+        
+        if (!VC.isHideSuperBack) {//如果不屏蔽就加这个方法，屏蔽了， 此控制器就不会响应返回方法
+            [btn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+        }
+        
+        UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:btn];
+        [VC.navigationItem setLeftBarButtonItem:item];
+         VC.hidesBottomBarWhenPushed = YES; // 隐藏底部的工具条
     }
     // 一旦调用super的pushViewController方法,就会创建子控制器viewController的view并调用viewController的viewDidLoad方法。可以在viewDidLoad方法中重新设置自己想要的左上角按钮样式
-    [super pushViewController:viewController animated:animated];
+    [super pushViewController:VC animated:animated];
 }
 
 -(BOOL)shouldAutorotate{

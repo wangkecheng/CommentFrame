@@ -10,4 +10,5 @@
 
 @interface HDBaseVC : UIViewController
 
+@property (nonatomic, assign) BOOL isHideSuperBack;
 @end

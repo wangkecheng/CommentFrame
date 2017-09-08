@@ -91,7 +91,11 @@
 
 +(void)checkNetWorkingState;
 
-//判断设备型号
-+ (NSString*)getCurrentDeviceModel;
++ (NSData *)resetSizeOfImageData:(UIImage *)source_image maxSize:(NSInteger)maxSize;
+
++ (NSDictionary *) reverseDict:(NSDictionary *)dict;
+
++ (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString;
+
 @end
 

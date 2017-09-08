@@ -9,4 +9,6 @@
 
 @interface HDMainNavC : UINavigationController
 -(void)setNavigationBarBgColor;
+
+
 @end

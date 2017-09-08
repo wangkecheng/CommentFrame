@@ -16,11 +16,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+ 
 }
 - (IBAction)action:(id)sender {
-    test2 *vc = [[test2 alloc]init];
-    [self.navigationController pushViewController:vc animated:YES];
+//    test2 *vc = [[test2 alloc]init];
+//    [self.navigationController pushViewController:vc animated:YES];
+    
+    [BaseServer postDict:nil path:@"" isShowHud:NO isShowSuccessHud:NO success:^(id result) {
+        
+    } failed:^(NSError *error) {
+        
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

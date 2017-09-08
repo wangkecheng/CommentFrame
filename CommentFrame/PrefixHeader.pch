@@ -8,8 +8,6 @@
 
 //网络请求基地址
 #define  POST_HOST @""
-//图片基地址
-#define  POST_HOST_image @""
 
 // 当前应用AppDelegate  ==========
 #define CurrentAppDelegate [[UIApplication sharedApplication] delegate]
@@ -91,3 +89,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 //极光推送
 #import "JPUSHService.h"
+
+#import "UIView+Toast.h"
+#import "HDBaseVC.h"
+#import "JYJCommenItem.h"

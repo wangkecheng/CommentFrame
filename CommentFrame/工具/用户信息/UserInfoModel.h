@@ -13,40 +13,29 @@
 +(instancetype)share;
 
 -(void)setDataWithDict:(NSDictionary *)dict;
+
 @property (nonatomic,assign)BOOL isMember;
-@property (nonatomic, copy) NSString *kid;
-@property (nonatomic, copy) NSString *uid;
-@property (nonatomic, copy) NSString *token;
-@property (nonatomic, copy) NSString *nickname;
-@property (nonatomic, copy) NSString *tou_url;
-@property (nonatomic, copy) NSString *live_titla; // 用户昵称
-@property (nonatomic, copy) NSString *guan_total;
-@property (nonatomic, copy) NSString *silk_totla;
-@property (nonatomic, copy) NSString *carport_total;
+
+@property (nonatomic, copy) NSString * amount;
+@property (nonatomic, copy) NSString *companyaddress;
+@property (nonatomic, copy) NSString *creattime;
+@property (nonatomic, copy) NSString *headimgurl;
+@property (nonatomic, copy) NSString *homeaddress;
+@property (nonatomic, copy) NSString *idcard;
+@property (nonatomic, copy) NSString *inviteid;
+@property (nonatomic, copy) NSString *isfirst;
 @property (nonatomic, copy) NSString *name;
-@property (nonatomic, copy) NSString *distance;
-@property (nonatomic, copy) NSString *long_time;
-@property (nonatomic, copy) NSString *city;
-@property (nonatomic, copy) NSString *cityId;
-@property (nonatomic, copy) NSString *live_pic;
-@property (nonatomic, copy) NSString *username;
-@property (nonatomic, copy) NSString *sex;
-@property (nonatomic, copy) NSString *nickame;
-@property (nonatomic, copy) NSString *photoUrl;
-@property (nonatomic, copy) NSString *star;
-@property (nonatomic, copy) NSString *mobile;
-@property (nonatomic, copy) NSString *adress;
-@property (nonatomic, copy) NSString *signature;
-@property (nonatomic, copy) NSString *phone;
-@property (nonatomic, copy) NSString *zanTing;
-@property (nonatomic, copy) NSString *suoDing;
-@property (strong, nonatomic)NSString *message;
-@property (strong, nonatomic)NSString *QRImageUrl;
-@property (strong, nonatomic)NSString *constellation;
-@property (strong, nonatomic)NSString *constellation_msg;
-@property (strong, nonatomic)NSString *number;
-@property (strong, nonatomic)NSString *msgLingDangNum;
-
-
-
+@property (nonatomic, copy) NSString *uid;
+@property (nonatomic, copy) NSString *paypwd;
+@property (nonatomic, copy) NSString *state;//状态，0-正常，1-锁定，2-冻结，3-禁止登录
+@property (nonatomic, copy) NSString *tel;
+@property (nonatomic, copy) NSString *result;
+@property (nonatomic, copy) NSString *token;
+@property (nonatomic,strong)NSString *homecoords;
+@property (nonatomic,strong)NSString *companycoords;
+@property (nonatomic,strong)NSString *passengerid;
+@property (nonatomic,strong)NSString *isUnit;//是否是单位 自己建的
+@property (nonatomic,strong)NSString *deviceid;
+@property (nonatomic,strong)NSString *firstcalltime;
+@property (nonatomic,strong)NSString *takecashpwd;
 @end

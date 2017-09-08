@@ -8,7 +8,6 @@ target 'CommentFrame' do
    pod 'MJRefresh'
    pod 'MBProgressHUD'
    pod 'IQKeyboardManager'
-   pod 'DSAlert-OC'
    
   target 'CommentFrameTests' do
     inherit! :search_paths

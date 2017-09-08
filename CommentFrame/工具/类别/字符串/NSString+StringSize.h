@@ -33,4 +33,5 @@
 - (NSDictionary *)attributesWith:(UIFont *)font lineSpace:(CGFloat)space;
 
 - (NSDictionary *)attributesWithFontSize:(CGFloat)fontSize lineSpace:(CGFloat)space;
+- (CGFloat)autoHByText:(NSString *)text Font:(CGFloat)font W:(CGFloat)W;
 @end

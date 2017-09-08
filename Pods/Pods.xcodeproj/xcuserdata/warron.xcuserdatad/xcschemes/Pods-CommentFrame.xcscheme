@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '9B43F547568602E385D605490CA7A476'
+               BlueprintIdentifier = '55B8872972CAE5C29A2B70DE373BBB4F'
                BlueprintName = 'Pods-CommentFrame'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libPods-CommentFrame.a'>

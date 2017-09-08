@@ -9,11 +9,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>DSAlert-OC.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>IQKeyboardManager.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -57,16 +52,6 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>015395C7FCF33ECC3E88E4AF6A1ABD21</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>0812556A4CDBD5FC85955B3AB85ED95A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>3C8FF9ED6ECACE221BE94C02ED05CC0A</key>
 		<dict>
 			<key>primary</key>
@@ -77,7 +62,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>55B8872972CAE5C29A2B70DE373BBB4F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>70BC44266C6FFE30D2C57129458E070B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7A3CB678CD3FDA37A2619CE02553B104</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -87,7 +82,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9B43F547568602E385D605490CA7A476</key>
+		<key>BD146CE7ABDB01DDDD6F3A4C6DED818A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -98,11 +93,6 @@
 			<true/>
 		</dict>
 		<key>D0D0C9D20C43FA94D4C88FBFE2601B8E</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F530256893DA0DD5EE23C38BFB982126</key>
 		<dict>
 			<key>primary</key>
 			<true/>

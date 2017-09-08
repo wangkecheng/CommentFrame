@@ -7,7 +7,6 @@
 //
 
 #import "CacheTool.h"
-#import "YYModel.h"
 
 static NSString *loginInfoKey = @"userInfo";
 static NSString *loginInfoArchiver = @"UserInfo.archive";
@@ -23,9 +22,8 @@ static NSString *loginInfoArchiverlushu = @"UserInfo.archivelushu";
 
 + (UserInfoModel *)getCachedUserInfo {
     NSString *userInfoString = [self getCacheWithKey:loginInfoKey AndArchiver:loginInfoArchiver];
-    NSDictionary *dict = [self dictionaryWithJsonString:userInfoString];
-    UserInfoModel *userInfoModel = [UserInfoModel share];
-    [userInfoModel setDataWithDict:dict];
+    NSDictionary *dict = [DDFactory dictionaryWithJsonString:userInfoString]; 
+    UserInfoModel *userInfoModel = [UserInfoModel yy_modelWithDictionary:dict];
     return  userInfoModel;
 }
 
@@ -116,8 +114,7 @@ static NSString *loginInfoArchiverlushu = @"UserInfo.archivelushu";
     userInfoModel.isMember = NO;
     userInfoModel.token = nil;
     userInfoModel.uid = nil;
-    userInfoModel.kid = nil;
-    [CacheTool cacheUserInfo:userInfoModel];
+       [CacheTool cacheUserInfo:userInfoModel];
     //    //取消极光推送别名 推送
     //    [JPUSHService setTags:nil alias:nil fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
     //        NSLog(@"wecode %d-------------%@,-------------%@",iResCode,iTags,iAlias);

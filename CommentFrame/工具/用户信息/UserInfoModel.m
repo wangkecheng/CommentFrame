@@ -10,31 +10,15 @@
 
 @implementation UserInfoModel
 
--(instancetype)init{
-    UserInfoModel *  infoModel = [UserInfoModel share];
-    return infoModel;
-}
--(instancetype)initPrivate{
-    //用父类方法初始化
-    if (self = [super init]) {
-        
-    }
-    return self;
-}
-
 +(instancetype)share{
-    static  UserInfoModel * infoModel = nil;
-    static dispatch_once_t token;
-    dispatch_once(&token, ^{
-        //GCD方式创建单列
-        if (!infoModel?YES:NO) {
-            infoModel = [[UserInfoModel alloc]initPrivate];
-             infoModel.isMember = NO;
-        }
-    });
+    UserInfoModel * infoModel = [[UserInfoModel alloc]init];
+    infoModel.isMember = NO;
     return infoModel;
 }
 -(void)setDataWithDict:(NSDictionary *)dict{
+    if (dict == nil || [dict isKindOfClass:[NSNull class]]) {
+        return;
+    }
     [self setValuesForKeysWithDictionary:dict];
 }
 

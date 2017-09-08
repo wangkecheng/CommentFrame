@@ -6,7 +6,7 @@
 #import "AYCheckManager.h"
 #import <StoreKit/StoreKit.h>
 #define REQUEST_SUCCEED 200
-#define CURRENT_VERSION [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
+#define LOCAL_VERSION [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
 #define BUNDLE_IDENTIFIER [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"]
 #define SYSTEM_VERSION_8_OR_ABOVE (([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)? (YES):(NO))
 #define TRACK_ID @"TRACKID"
@@ -36,7 +36,9 @@ static AYCheckManager *checkManager = nil;
         checkManager.nextTimeTitle = @"下次提示";
         checkManager.confimTitle = @"前往更新";
         checkManager.alertTitle = @"发现新版本";
-        checkManager.skipVersionTitle = nil;
+        checkManager.skipVersionTitle = @"跳过当前版本";
+        checkManager.countryAbbreviation = @"cn";
+        checkManager.openAPPStoreInsideAPP = YES;
     });
     return checkManager;
 }
@@ -70,7 +72,7 @@ static AYCheckManager *checkManager = nil;
     }
     NSURLRequest *request = [NSURLRequest requestWithURL:requestURL];
     NSURLSession *session = [NSURLSession sharedSession];
-
+    
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         
         NSHTTPURLResponse *urlResponse = (NSHTTPURLResponse *)response;
@@ -88,17 +90,17 @@ static AYCheckManager *checkManager = nil;
                 [userDefault setObject:resultDic[@"releaseNotes"] forKey:APP_RELEASE_NOTES];
                 [userDefault setObject:resultDic[@"trackViewUrl"] forKey:APP_TRACK_VIEW_URL];
                 [userDefault setObject:[resultDic[@"trackId"] stringValue] forKey:TRACK_ID];
-                if ([resultDic[@"version"] isEqualToString:CURRENT_VERSION] || ![[userDefault objectForKey:SKIP_VERSION] isEqualToString:resultDic[@"version"]]) {
+                if ([resultDic[@"version"] isEqualToString:LOCAL_VERSION] || ![[userDefault objectForKey:SKIP_VERSION] isEqualToString:resultDic[@"version"]]) {
                     [userDefault setBool:NO forKey:SKIP_CURRENT_VERSION];
                 }
                 [userDefault synchronize];
-
+                
                 NSLog(@"*****************\nAPP_LAST_VERSION:\n%@\nAPP_RELEASE_NOTES:\n%@\n*****************",[userDefault objectForKey:APP_LAST_VERSION],[userDefault objectForKey:APP_RELEASE_NOTES]);
-
+                
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
                     if (![[userDefault objectForKey:SKIP_CURRENT_VERSION] boolValue]) {
-                        if (![self isEqualByCompareLastVersion:resultDic[@"version"] withCurrentVersion:CURRENT_VERSION]) {
+                        if (![self serviceHigerthanLocal:LOCAL_VERSION withCurVersion: resultDic[@"version"]] ) {
                             [self compareWithCurrentVersion];
                         }
                     }
@@ -110,16 +112,16 @@ static AYCheckManager *checkManager = nil;
 }
 
 /**
- * 比较当前版本号是否与沙盒中的版本号相同
+ * 比较服务器的版本高一些还是本地的高一些，服务器的高一些 就更新
  */
-- (BOOL)isEqualByCompareLastVersion:(NSString *)lastVersion withCurrentVersion:(NSString *)currentVersion {
-    NSArray *lastVersionArray = [lastVersion componentsSeparatedByString:@"."];
-    NSArray *currentVersionArray = [currentVersion componentsSeparatedByString:@"."];
-//    if (lastVersionArray.count != currentVersionArray.count) {
-//        return NO;
-//    }
-    for (int index = 0; index < lastVersionArray.count; index++) {
-        if ([currentVersionArray[index] integerValue] != [lastVersionArray[index] integerValue]) {
+- (BOOL)serviceHigerthanLocal:(NSString *)localVersion withCurVersion:(NSString *) serVersion {
+    NSArray *locVersionArr = [localVersion componentsSeparatedByString:@"."];
+    NSArray *serVersionArr = [serVersion componentsSeparatedByString:@"."];
+    if (locVersionArr.count != serVersionArr.count) {//版本号位数不同的话，就跟新
+        return NO;//不相同
+    }
+    for (int index = 0; index < locVersionArr.count; index++) {
+        if ([serVersionArr[index] integerValue] > [locVersionArr[index] integerValue]) {
             return NO;
         }
     }
@@ -142,12 +144,12 @@ static AYCheckManager *checkManager = nil;
     
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     NSString *updateMessage = [userDefault objectForKey:APP_RELEASE_NOTES];
-    if (![[userDefault objectForKey:APP_LAST_VERSION] isEqualToString:CURRENT_VERSION]) {
+    if (![[userDefault objectForKey:APP_LAST_VERSION] isEqualToString:LOCAL_VERSION]) {
         if (SYSTEM_VERSION_8_OR_ABOVE) {
             __weak typeof(self) weakSelf = self;
             UIAlertController *alertControler = [UIAlertController alertControllerWithTitle:self.alertTitle message:updateMessage preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:self.nextTimeTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-              
+                
             }];
             UIAlertAction *confimAction = [UIAlertAction actionWithTitle:self.confimTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 
